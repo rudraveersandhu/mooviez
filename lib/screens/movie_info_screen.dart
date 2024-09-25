@@ -166,60 +166,112 @@ class _MovieInfoScreenState extends State<MovieInfoScreen> with TickerProviderSt
                           ),
                         ),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 15.0, top: 15),
-                                child: Container(
-                                    width: MediaQuery.of(context).size.width - 120,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              CupertinoIcons.waveform_path,
-                                              color: Colors.grey.shade500,
-                                            ),
-                                            SizedBox(
-                                              width: 7,
-                                            ),
-                                            Column(
-                                              children: [
-                                                Text(
-                                                  "Listen on Strings",
-                                                  maxLines: 3,
-                                                  style: TextStyle(
-                                                      color: Colors.grey.shade500,
-                                                      fontSize: 12,
-                                                      fontWeight: FontWeight.w500),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 15.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(widget.show.name,
+                                        style: TextStyle(
+                                            fontSize: 26
                                         ),
+                                      ),
+                                      SizedBox(height: 20,),
+                                      Row(
+                                        children: [
+                                          Text("Language: " ,
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600
+                                            ),
+                                          ),
+                                          Text(widget.show.language ,
+                                            style: TextStyle(
+                                                fontSize: 15
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 2,),
+                                      Row(crossAxisAlignment: CrossAxisAlignment.end,
+                                        children: [
+                                          Text("Rating: " ,
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                              fontWeight: FontWeight.w600
+                                            ),
+                                          ),
+                                          Text(widget.show.rating.average.toString() + ' Stars' ,
+                                            style: TextStyle(
+                                                fontSize: 15
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 2,),
+                                      Row(crossAxisAlignment: CrossAxisAlignment.end,
+                                        children: [
+                                          Text("Genre: " ,
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600
+                                            ),
+                                          ),
+                                          Text(widget.show.genres[0].toString()  ,
+                                            style: TextStyle(
+                                                fontSize: 15
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 20,),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text("Summary: " ,
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600
+                                            ),
+                                          ),
+                                          Container(
+                                            width: MediaQuery.of(context).size.width * .9,
+                                            child: Text(widget.show.summary.replaceAll("<p>", "").replaceAll("</p>", ""),
+                                              style: TextStyle(
+                                                  fontSize: 15
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
 
-                                      ],
-                                    )),
+
+                                ],
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Icon(
-                                  Icons.play_circle_filled_rounded,
-                                  color: Colors.white,
-                                  size: 77,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                            ),
+
+                          ],
+                        ),
+                      ),
+                      Positioned(
+                        top: 10,
+                        right: 15,
+                        child: Icon(
+                          Icons.play_circle_filled_rounded,
+                          color: Colors.white,
+                          size: 77,
+                        ),
                       ),
                     ],
                   ),
