@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quad_movies/home_page.dart';
+import 'package:quad_movies/profile_screen.dart';
+import 'package:quad_movies/search_screen.dart';
 
 class RootPage extends StatefulWidget {
   @override
@@ -12,8 +14,8 @@ class _RootPageState extends State<RootPage> {
 
   final List<Widget> _pages = [
     HomePage(),
-    Center(child: Text('Search Page', style: TextStyle(color: Colors.white))),
-    Center(child: Text('Profile Page', style: TextStyle(color: Colors.white))),
+    SearchScreen(),
+    ProfileScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -83,6 +85,10 @@ class _RootPageState extends State<RootPage> {
 
 
               Container(
+                height: .3,
+                color: Colors.grey.shade500,
+              ),
+              Container(
                 width: MediaQuery.of(context).size.width,
                 color: Color.fromRGBO(21,19,24,1),
                 child: Padding(
@@ -93,7 +99,8 @@ class _RootPageState extends State<RootPage> {
                         padding: const EdgeInsets.only(bottom: 10.0),
                         child: Text('TV Shows',
                         style: TextStyle(
-                          fontSize: 24
+                          fontSize: 24,
+                          fontWeight: FontWeight.w300
                         ),),
                       ),
                       Padding(

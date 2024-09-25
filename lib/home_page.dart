@@ -60,102 +60,105 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: Container(
 
-      body: FutureBuilder<List<Show>>(
-        future: ApiService().fetchShows(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return ListView.builder(
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  leading: SizedBox(
-                    width: 50.0,
-                    height: 50.0,
-                    child: Shimmer.fromColors(
-                      baseColor: Colors.black.withRed(50),
-                      highlightColor: Colors.black.withRed(150),
-                      child: Container(
-                        width: 50.0,
-                        height: 50.0,
-                        color: Colors.grey[300],
+        color: Color.fromRGBO(21,19,24,1),
+        child: FutureBuilder<List<Show>>(
+          future: ApiService().fetchShows(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return ListView.builder(
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: SizedBox(
+                      width: 50.0,
+                      height: 50.0,
+                      child: Shimmer.fromColors(
+                        baseColor: Colors.black.withRed(50),
+                        highlightColor: Colors.black.withRed(150),
+                        child: Container(
+                          width: 50.0,
+                          height: 50.0,
+                          color: Colors.grey[300],
+                        ),
                       ),
                     ),
-                  ),
-                  title: Text('Movie'),
-                  subtitle: Text('language'),
-                  trailing: Text('Rating'),
-                  onTap: () {
-                    // Add logic to handle item click
-                  },
-                );
-              },
-            );
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No shows found.'));
-          } else {
-            _controller.forward();
-            final shows = snapshot.data!;
+                    title: Text('Movie'),
+                    subtitle: Text('language'),
+                    trailing: Text('Rating'),
+                    onTap: () {
+                      // Add logic to handle item click
+                    },
+                  );
+                },
+              );
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return Center(child: Text('No shows found.'));
+            } else {
+              _controller.forward();
+              final shows = snapshot.data!;
 
-            // Use AnimatedBuilder for the fade effect
-            return AnimatedBuilder(
-              animation: _fadeAnimation,
-              builder: (context, child) {
-                return Opacity(
-                  opacity: _fadeAnimation.value,
-                  child: ListView.builder(
-                    itemCount: shows.length,
-                    itemBuilder: (context, index) {
-                      final show = shows[index];
-                      return ListTile(
-                        leading: show.image.medium.isNotEmpty
-                            ? Container(
-                          width: 50.0,
-                          height: 50.0,
-                          child: CachedNetworkImage(
-                            imageUrl: show.image.medium,
-                              fit: BoxFit.cover,
-                            placeholder: (context, url) => SizedBox(
-                              width: 50.0,
-                              height: 50.0,
-                              child: Shimmer.fromColors(
-                                baseColor: Colors.black.withRed(50),
-                                highlightColor: Colors.black.withRed(150),
-                                child: Container(
-                                  width: 50.0,
-                                  height: 50.0,
-                                  color: Colors.grey[300],
+              // Use AnimatedBuilder for the fade effect
+              return AnimatedBuilder(
+                animation: _fadeAnimation,
+                builder: (context, child) {
+                  return Opacity(
+                    opacity: _fadeAnimation.value,
+                    child: ListView.builder(
+                      itemCount: shows.length,
+                      itemBuilder: (context, index) {
+                        final show = shows[index];
+                        return ListTile(
+                          leading: show.image.medium.isNotEmpty
+                              ? Container(
+                            width: 50.0,
+                            height: 50.0,
+                            child: CachedNetworkImage(
+                              imageUrl: show.image.medium,
+                                fit: BoxFit.cover,
+                              placeholder: (context, url) => SizedBox(
+                                width: 50.0,
+                                height: 50.0,
+                                child: Shimmer.fromColors(
+                                  baseColor: Colors.black.withRed(50),
+                                  highlightColor: Colors.black.withRed(150),
+                                  child: Container(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    color: Colors.grey[300],
+                                  ),
                                 ),
                               ),
+                              errorWidget: (context, url, error) => Icon(Icons.error),
                             ),
-                            errorWidget: (context, url, error) => Icon(Icons.error),
-                          ),
 
-                        )
-                            : SizedBox(
-                          width: 50.0,
-                          height: 50.0,
-                          child: Image.asset(
-                            'assets/placeholder.png',
-                            fit: BoxFit.cover,
+                          )
+                              : SizedBox(
+                            width: 50.0,
+                            height: 50.0,
+                            child: Image.asset(
+                              'assets/placeholder.png',
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        ),
-                        title: Text(show.name),
-                        subtitle: Text(show.language),
-                        trailing: Text(show.rating.average.toString()),
-                        onTap: () {
-                          // Add logic to handle item click
-                        },
-                      );
-                    },
-                  ),
-                );
-              },
-            );
-          }
-        },
+                          title: Text(show.name),
+                          subtitle: Text(show.language),
+                          trailing: Text(show.rating.average.toString()),
+                          onTap: () {
+                            // Add logic to handle item click
+                          },
+                        );
+                      },
+                    ),
+                  );
+                },
+              );
+            }
+          },
+        ),
       ),
     );
   }
