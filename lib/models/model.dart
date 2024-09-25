@@ -33,10 +33,10 @@ class Show {
 
   factory Show.fromJson(Map<String, dynamic> json) {
     return Show(
-      id: json['id'],
-      name: json['name'],
-      type: json['type'],
-      language: json['language'],
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
+      type: json['type'] ?? '',
+      language: json['language'] ?? '',
       genres: List<String>.from(json['genres']),
       status: json['status'],
       runtime: json['runtime'] ?? 0,

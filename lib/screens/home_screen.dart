@@ -92,8 +92,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       itemCount: shows.length,
                       itemBuilder: (context, index) {
                         final show = shows[index];
-                        print(shows.length);
-                        return ShowItem(show: show);
+
+                        return GestureDetector(
+                          onTap: (){
+                            print(show);
+                            print("fvdfvdfvdf");
+                          },
+                            child: Container(child: ShowItem(show: show)));
                       },
                     ),
                   );

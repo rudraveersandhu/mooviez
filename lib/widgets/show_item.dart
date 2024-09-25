@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:quad_movies/screens/movie_info_screen.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../models/model.dart';
@@ -50,8 +51,24 @@ class _ShowItemState extends State<ShowItem> {
       ),
       title: Text(widget.show.name),
       subtitle: Text(widget.show.language),
-      trailing: Text(widget.show.rating.average.toString()),
+      trailing: Container(
+        width: 60,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Icon(Icons.star,color: Colors.amber.shade700,size: 14,),
+            SizedBox(width: 5,),
+            Text(widget.show.rating.average.toString()),
+          ],
+        ),
+      ),
       onTap: () {
+        print("ddddddd");
+        print(widget.show.image.medium);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MovieInfoScreen(show: widget.show)),
+        );
         // Add logic to handle item click
       },
     );
