@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:quad_movies/models/search_model.dart';
 import 'package:quad_movies/widgets/show_item.dart';
 
-import 'api_services/api_services.dart';
-import 'models/model.dart';
+import '../api_services/api_services.dart';
+import '../models/model.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});

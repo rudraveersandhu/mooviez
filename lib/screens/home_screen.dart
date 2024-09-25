@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:quad_movies/widgets/show_item.dart';
 import 'package:shimmer/shimmer.dart';
 
-import 'api_services/api_services.dart';
-import 'models/model.dart';
+import '../api_services/api_services.dart';
+import '../models/model.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
         color: Color.fromRGBO(21,19,24,1),
         child: FutureBuilder<List<Show>>(
-          future: ApiService().fetchShows(),
+          future: ApiService.fetchAllShows(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return ListView.builder(
@@ -92,6 +92,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       itemCount: shows.length,
                       itemBuilder: (context, index) {
                         final show = shows[index];
+                        print(shows.length);
                         return ShowItem(show: show);
                       },
                     ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:quad_movies/root_page.dart';
 
-import 'home_page.dart';
+import 'home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   @override

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:quad_movies/home_page.dart';
-import 'package:quad_movies/profile_screen.dart';
-import 'package:quad_movies/search_screen.dart';
+import 'package:quad_movies/screens/home_screen.dart';
+import 'package:quad_movies/screens/profile_screen.dart';
+
+import 'package:quad_movies/screens/search_screen.dart';
 
 import 'api_services/api_services.dart';
 import 'models/model.dart';
@@ -135,10 +136,19 @@ class _RootPageState extends State<RootPage> {
                             onTap: (){
                               _onItemTapped(1);
                             },
-                            onChanged: (value){
+                            onChanged: (value) async {
+                              if (value == ''){
+                                List<Show> shows = await ApiService.searchShows('');
+                                model.updateSearchShows(shows);
 
-                              model.updateSearchString(value);
-                              _performSearch(value);
+                              }else{
+                                List<Show> shows = await ApiService.searchShows(value);
+                                model.updateSearchShows(shows);
+                              }
+
+
+
+
                             },
                           ),
                         ),
@@ -176,7 +186,7 @@ class _RootPageState extends State<RootPage> {
     );
   }
   Future<void> _performSearch(String searchTerm) async {
-    final model = Provider.of<SearchModel>(context);
+    final model = Provider.of<SearchModel>(context,listen: false);
 
     setState(() {
       _isLoading = true;
@@ -184,7 +194,7 @@ class _RootPageState extends State<RootPage> {
 
     try {
       List<Show> shows = await ApiService.searchShows(searchTerm);
-      model.updateSearchShows(shows);
+       model.updateSearchShows(shows);
       setState(() {
         _isLoading = false;
       });
