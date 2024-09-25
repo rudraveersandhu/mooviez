@@ -60,9 +60,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('TV Shows'),
-      ),
+
       body: FutureBuilder<List<Show>>(
         future: ApiService().fetchShows(),
         builder: (context, snapshot) {

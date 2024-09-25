@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:quad_movies/home_page.dart';
 
 class RootPage extends StatefulWidget {
@@ -24,32 +25,106 @@ class _RootPageState extends State<RootPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black.withRed(20),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [ Colors.red.shade900,
+              Colors.black.withRed(20)],
+            begin: Alignment.bottomRight,
+            end: Alignment.topLeft,
+          ),
+        ),
+        child: SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20.0,left: 20,right: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(5)),
+                          child: Image.asset('assets/pfp.jpg',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        SizedBox(width: 16),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Christiana Amandla",
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 17
+                              ),
+                            ),
+                            const SizedBox(height: 2,),
+                            Text("Lets Watch something refreshing!",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 13,
+                                  color: Colors.grey.shade700
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
 
-      body: SafeArea(
-        child: Column(
-          children: [
-
-            Container(
-              width: MediaQuery.of(context).size.width * .9,  // Adjust the width as necessary
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                color: Colors.black.withRed(30),  // Dark grey background for the container
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.grey[300]!),  // Light grey border
-              ),
-              child: TextField(
-                style: TextStyle(color: Colors.white),  // Text color inside the field
-                decoration: InputDecoration(
-                  hintText: 'Search for movies',
-                  hintStyle: TextStyle(color: Colors.grey[300],),  // Light grey hint text
-                  prefixIcon: Icon(Icons.search, color: Colors.grey[300]),  // Magnifying glass icon
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(vertical: 12),
+                    Icon(Icons.density_medium_outlined)
+                  ],
                 ),
               ),
-            ),
-            Expanded(child: _pages[_currentIndex]),
-          ],
+
+
+              Container(
+                width: MediaQuery.of(context).size.width,
+                color: Color.fromRGBO(21,19,24,1),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 15.0,right: 15,top: 10),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        child: Text('TV Shows',
+                        style: TextStyle(
+                          fontSize: 24
+                        ),),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 12.0),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * .9,  // Adjust the width as necessary
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withRed(30),  // Dark grey background for the container
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: Colors.grey[300]!),  // Light grey border
+                          ),
+                          child: TextField(
+                            style: TextStyle(color: Colors.white),  // Text color inside the field
+                            decoration: InputDecoration(
+                              hintText: 'Search for shows',
+                              hintStyle: TextStyle(color: Colors.grey[300],),  // Light grey hint text
+                              prefixIcon: Icon(Icons.search, color: Colors.grey[300]),  // Magnifying glass icon
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.symmetric(vertical: 12),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(child: _pages[_currentIndex]),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
