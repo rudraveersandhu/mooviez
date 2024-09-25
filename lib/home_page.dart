@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:quad_movies/widgets/show_item.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'api_services/api_services.dart';
@@ -11,9 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
-  List<Show> _searchResults = [];
-  bool _isLoading = false;
-  TextEditingController _searchController = TextEditingController();
+
 
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
@@ -37,25 +36,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     super.dispose();
   }
 
-  Future<void> _performSearch(String searchTerm) async {
-    setState(() {
-      _isLoading = true;
-    });
 
-    try {
-      List<Show> shows = await ApiService.searchShows(searchTerm);
-      setState(() {
-        _searchResults = shows;
-        _isLoading = false;
-      });
-
-    } catch (error) {
-      setState(() {
-        _isLoading = false;
-      });
-      print('Error: $error');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,46 +92,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       itemCount: shows.length,
                       itemBuilder: (context, index) {
                         final show = shows[index];
-                        return ListTile(
-                          leading: show.image.medium.isNotEmpty
-                              ? Container(
-                            width: 50.0,
-                            height: 50.0,
-                            child: CachedNetworkImage(
-                              imageUrl: show.image.medium,
-                                fit: BoxFit.cover,
-                              placeholder: (context, url) => SizedBox(
-                                width: 50.0,
-                                height: 50.0,
-                                child: Shimmer.fromColors(
-                                  baseColor: Colors.black.withRed(50),
-                                  highlightColor: Colors.black.withRed(150),
-                                  child: Container(
-                                    width: 50.0,
-                                    height: 50.0,
-                                    color: Colors.grey[300],
-                                  ),
-                                ),
-                              ),
-                              errorWidget: (context, url, error) => Icon(Icons.error),
-                            ),
-
-                          )
-                              : SizedBox(
-                            width: 50.0,
-                            height: 50.0,
-                            child: Image.asset(
-                              'assets/placeholder.png',
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          title: Text(show.name),
-                          subtitle: Text(show.language),
-                          trailing: Text(show.rating.average.toString()),
-                          onTap: () {
-                            // Add logic to handle item click
-                          },
-                        );
+                        return ShowItem(show: show);
                       },
                     ),
                   );

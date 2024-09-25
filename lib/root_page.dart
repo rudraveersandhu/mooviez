@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:quad_movies/home_page.dart';
 import 'package:quad_movies/profile_screen.dart';
 import 'package:quad_movies/search_screen.dart';
+
+import 'api_services/api_services.dart';
+import 'models/model.dart';
+import 'models/search_model.dart';
 
 class RootPage extends StatefulWidget {
   @override
@@ -10,6 +15,10 @@ class RootPage extends StatefulWidget {
 }
 
 class _RootPageState extends State<RootPage> {
+
+  List<Show> _searchResults = [];
+  bool _isLoading = false;
+  TextEditingController _searchController = TextEditingController();
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
@@ -26,6 +35,7 @@ class _RootPageState extends State<RootPage> {
 
   @override
   Widget build(BuildContext context) {
+    final model = Provider.of<SearchModel>(context);
     return Scaffold(
       backgroundColor: Colors.black.withRed(20),
       body: Container(
@@ -111,7 +121,7 @@ class _RootPageState extends State<RootPage> {
                           decoration: BoxDecoration(
                             color: Colors.black.withRed(30),  // Dark grey background for the container
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: Colors.grey[300]!),  // Light grey border
+                            border: Border.all(color: Colors.grey[400]!,width: .5),  // Light grey border
                           ),
                           child: TextField(
                             style: TextStyle(color: Colors.white),  // Text color inside the field
@@ -122,6 +132,14 @@ class _RootPageState extends State<RootPage> {
                               border: InputBorder.none,
                               contentPadding: EdgeInsets.symmetric(vertical: 12),
                             ),
+                            onTap: (){
+                              _onItemTapped(1);
+                            },
+                            onChanged: (value){
+
+                              model.updateSearchString(value);
+                              _performSearch(value);
+                            },
                           ),
                         ),
                       ),
@@ -156,5 +174,26 @@ class _RootPageState extends State<RootPage> {
         ],
       ),
     );
+  }
+  Future<void> _performSearch(String searchTerm) async {
+    final model = Provider.of<SearchModel>(context);
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      List<Show> shows = await ApiService.searchShows(searchTerm);
+      model.updateSearchShows(shows);
+      setState(() {
+        _isLoading = false;
+      });
+
+    } catch (error) {
+      setState(() {
+        _isLoading = false;
+      });
+      print('Error: $error');
+    }
   }
 }
